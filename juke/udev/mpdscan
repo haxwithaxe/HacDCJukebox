@@ -1,0 +1,34 @@
+#!/bin/bash
+action=$1
+
+devname=$2
+
+fstype=$3
+
+mount_() {
+
+   mkdir -p /media/${devname}
+
+   mount -o users,rw -t ${fstype} ${devname} /media/${devname}
+
+}
+
+unmount_() {
+
+      rm -rf /media/${devname}
+
+}
+
+# mount/unmount device with user friendly permissions
+if [[ $action == "mount" ]];then
+
+   mount_
+
+elif [[ $action == "unmount" ]];then
+
+   unmount_
+
+fi
+
+# have mpd rescan the /media folder
+mpd --create-db
